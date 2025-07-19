@@ -6,6 +6,10 @@ import shutil
 CACHE_DIR = "./cache"
 SERVERS_DIR = "./servers"
 
+class ServerManager:
+    def getServers():
+        return os.listdir(Path(SERVERS_DIR))
+
 class Server:
     SOFTWARES = [Paper]
     def __init__(self, software, version, build, name, port):
@@ -23,7 +27,7 @@ class Server:
         """
         Creates the files necessary for a server to operate.
         Returns True if successful, False otherwise.
-            """
+        """
         if not self.software:
             return False
 
