@@ -7,11 +7,38 @@ CACHE_DIR = "./cache"
 SERVERS_DIR = "./servers"
 
 class ServerManager:
+    def toDict(self):
+        return {
+            "items": [server.toDict() for server in self.servers]
+        }
+    
+    @staticmethod
+    def fromDict(data):
+        manager = ServerManager()
+        manager.servers = [Server.fromDict(serverData) for serverData in data["servers"]]
+        return manager
+
     def getServers():
         return os.listdir(Path(SERVERS_DIR))
+    
+
 
 class Server:
     SOFTWARES = [Paper]
+
+    def toDict(self):
+        return {
+            "name": self.name,
+            "software": self.software,
+            "version": self.version,
+            "build": self.build,
+            "port": self.port,
+        }
+    
+    @staticmethod
+    def fromDict(data):
+        return Server(data["software"], data["version"], data["build"], data["name"], data["port"])
+
     def __init__(self, software, version, build, name, port):
         if not isinstance(software, *self.SOFTWARES):
             print(TypeError("Incorrect server software provided. Please provide the software in the form of a class"))
@@ -42,8 +69,6 @@ class Server:
         except Exception as e:
             print(f"Failed to create server directory: {e}")
             return False
-
-        self.serverDir = str(installDir)
 
         jarName = f"{self.software.identifier}-{self.version}-{self.build}.jar"
         jarCache = Path(CACHE_DIR) / jarName
