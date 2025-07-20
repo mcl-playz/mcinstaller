@@ -20,8 +20,6 @@ class ServerManager:
 
     def getServers():
         return os.listdir(Path(SERVERS_DIR))
-    
-
 
 class Server:
     SOFTWARES = [Paper]
