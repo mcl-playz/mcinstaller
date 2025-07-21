@@ -1,2 +1,4 @@
 __pycache__/
 servers/*
+cache/*
+.vscode/*
